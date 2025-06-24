@@ -3,7 +3,7 @@ import subprocess
 import sys
 import os
 import re
-from constants import Path
+from constants import Path, Pattern
 
 def extract_task_code(filename):
     """
@@ -36,7 +36,7 @@ def extract_task_code(filename):
         Could not extract task code from filename: invalid_name.py
         (then exits the program)
     """
-    match = re.search(r'_L\d+_T\d+', filename)
+    match = re.search(Pattern.TASK_CODE, filename)
     if not match:
         print(f"Could not extract task code from filename: {filename}")
         sys.exit(1)
