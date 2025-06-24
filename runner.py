@@ -1,5 +1,6 @@
 import sys
-from utils import run_test, extract_task_code, load_test_cases
+from utils import run_test, extract_task_code
+from services.test_loader import TestLoader
 
 def run():
     if len(sys.argv) != 2:
@@ -10,7 +11,7 @@ def run():
     script_file = sys.argv[1]
     task_code = extract_task_code(script_file)
 
-    test_cases = load_test_cases(task_code)
+    test_cases = TestLoader.load(task_code)
 
     passed = 0
     total = len(test_cases)

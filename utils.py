@@ -42,53 +42,6 @@ def extract_task_code(filename):
         sys.exit(1)
     return match.group(0)[1:]
 
-def load_test_cases(task_code):
-    """
-    Dynamically loads the list of test cases for a given task.
-
-    Given a task code in the format "L<number>_T<number>", this function constructs the expected
-    file path of the test definition module (e.g., "tests/L2/T3.py"), dynamically imports it,
-    and returns the `test_cases` variable defined within.
-
-    Parameters:
-        task_code (str): Task identifier in the format "L<number>_T<number>", e.g., "L2_T3".
-
-    Returns:
-        list: The list of test cases defined as `test_cases` in the corresponding file.
-
-    Raises:
-        SystemExit: If the test file is not found or does not contain `test_cases`.
-
-    Example:
-        >>> load_test_cases("L2_T3")
-        [
-            ("Description 1", ["1", "1"], "True"),
-            ("Description 2", ["1", "2"], "False"),
-            ...
-        ]
-
-    Directory structure expected:
-        - tests/
-          └── L2/
-              └── T3.py  # Contains a `test_cases = [...]` variable
-    """
-    level, task = task_code.split("_")
-    
-    test_path = os.path.join(Path.TESTS_DIR, level, task + ".py")
-    if not os.path.exists(test_path):
-        print(f"Test file not found: {test_path}")
-        sys.exit(1)
-
-    spec = importlib.util.spec_from_file_location("test_module", test_path)
-    module = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(module)
-
-    if not hasattr(module, "test_cases"):
-        print(f"No 'test_cases' defined in {test_path}")
-        sys.exit(1)
-
-    return module.test_cases
-
 def run_solution_file(script_file, *args):
     """
     Executes a Python script with the given command-line arguments and captures its output.
