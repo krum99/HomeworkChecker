@@ -3,6 +3,7 @@ import subprocess
 import sys
 import os
 import re
+from constants import Path
 
 def extract_task_code(filename):
     """
@@ -72,7 +73,8 @@ def load_test_cases(task_code):
               └── T3.py  # Contains a `test_cases = [...]` variable
     """
     level, task = task_code.split("_")
-    test_path = f"tests/{level}/{task}.py"
+    
+    test_path = os.path.join(Path.TESTS_DIR, level, task + ".py")
     if not os.path.exists(test_path):
         print(f"Test file not found: {test_path}")
         sys.exit(1)
