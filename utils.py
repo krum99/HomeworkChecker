@@ -1,46 +1,5 @@
-import importlib.util
 import subprocess
 import sys
-import os
-import re
-from constants import Path, Pattern
-
-def extract_task_code(filename):
-    """
-    Extracts the task identifier from a student solution filename.
-
-    The expected filename format is: FXXXXX_Ln_Tm.py, where:
-        - FXXXXX is the student ID or prefix (ignored)
-        - Ln is the homework (e.g., L2)
-        - Tm is the task number (e.g., T3)
-
-    The function returns the string "Ln_Tm" (e.g., "L2_T3").
-
-    Parameters:
-        filename (str): The name of the solution file.
-
-    Returns:
-        str: The extracted task code in the format "L<number>_T<number>".
-
-    Raises:
-        SystemExit: If the task code cannot be found in the filename.
-
-    Example:
-        >>> extract_task_code("F12345_L2_T3.py")
-        'L2_T3'
-
-        >>> extract_task_code("solution_L1_T5.py")
-        'L1_T5'
-
-        >>> extract_task_code("invalid_name.py")
-        Could not extract task code from filename: invalid_name.py
-        (then exits the program)
-    """
-    match = re.search(Pattern.TASK_CODE, filename)
-    if not match:
-        print(f"Could not extract task code from filename: {filename}")
-        sys.exit(1)
-    return match.group(0)[1:]
 
 def run_solution_file(script_file, *args):
     """

@@ -1,12 +1,12 @@
 import sys
-from utils import run_test, extract_task_code
+from utils import run_test
 from services.test_loader import TestLoader
 from data.task_code import TaskCode
 
 def run():
     if len(sys.argv) != 2:
         print("Usage: python runner.py <solution_file.py>")
-        print("Example: python runner.py F12345_L2_T3.py")
+        print("Example: python runner.py F123456_L2_T3.py")
         sys.exit(1)
 
     script_file = sys.argv[1]
