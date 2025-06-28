@@ -3,6 +3,7 @@ import sys
 from types import ModuleType
 import importlib.util
 from constants import Path
+from data.task_code import TaskCode
 
 class TestLoader:
     """
@@ -15,7 +16,7 @@ class TestLoader:
     """
 
     @staticmethod
-    def load(task_code: str) -> list[tuple[str, list[str], str]]:
+    def load(task_code: TaskCode) -> list[tuple[str, list[str], str]]:
         """
         Loads the list of test cases for the given task code.
 
@@ -28,8 +29,7 @@ class TestLoader:
         Raises:
             SystemExit: If the test file is not found or does not define 'test_cases'.
         """
-        level, task = task_code.split("_")
-        test_path = TestLoader._build_test_path(level, task)
+        test_path = TestLoader._build_test_path(task_code.get_lecture(), task_code.get_task())
         module = TestLoader._import_test_module(test_path)
 
         if not hasattr(module, "test_cases"):

@@ -1,6 +1,7 @@
 import sys
 from utils import run_test, extract_task_code
 from services.test_loader import TestLoader
+from data.task_code import TaskCode
 
 def run():
     if len(sys.argv) != 2:
@@ -9,8 +10,9 @@ def run():
         sys.exit(1)
 
     script_file = sys.argv[1]
-    task_code = extract_task_code(script_file)
 
+    task_code = TaskCode.from_string(script_file)
+    
     test_cases = TestLoader.load(task_code)
 
     passed = 0
