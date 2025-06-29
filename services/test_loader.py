@@ -4,6 +4,7 @@ from types import ModuleType
 import importlib.util
 from constants import Path
 from data.task_code import TaskCode
+from data.homework_test_suite import HomeworkTestSuite
 
 class TestLoader:
     """
@@ -16,7 +17,7 @@ class TestLoader:
     """
 
     @staticmethod
-    def load(task_code: TaskCode) -> list[tuple[str, list[str], str]]:
+    def load(task_code: TaskCode) -> HomeworkTestSuite:
         """
         Loads the list of test cases for the given task code.
 
@@ -32,11 +33,11 @@ class TestLoader:
         test_path = TestLoader._build_test_path(task_code.get_lecture(), task_code.get_task())
         module = TestLoader._import_test_module(test_path)
 
-        if not hasattr(module, "test_cases"):
+        if not hasattr(module, "test_suite"):
             print(f"No 'test_cases' defined in {test_path}")
             sys.exit(1)
 
-        return module.test_cases
+        return module.test_suite
 
     @staticmethod
     def _build_test_path(level: str, task: str) -> str:

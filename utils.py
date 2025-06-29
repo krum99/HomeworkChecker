@@ -49,7 +49,7 @@ def run_test(script_file: str, test_case: HomeworkTestCase) -> bool:
     Returns:
         bool: True if the script's output matches the expected output; False otherwise.
     """
-    print(test_case)  # uses __str__ for description, arguments, and expected output
+    print(test_case)
 
     output = run_solution_file(script_file, *test_case.get_args())
     print(f"⬅️ Output received: {output}")
@@ -60,3 +60,13 @@ def run_test(script_file: str, test_case: HomeworkTestCase) -> bool:
     else:
         print(f"❌ Test failed – expected: {test_case.get_expected_output()}\n")
         return False
+
+
+def test_summary(total: int, passed: int):
+    print("📊 Test Summary:")
+    print(f"✅ Passed:   {passed}/{total}")
+    print(f"❌ Failed:   {total - passed}/{total}")
+    if passed == total:
+        print("🎉 All tests passed successfully!")
+    else:
+        print("⚠️ Some tests failed. Please review your solution.")
