@@ -22,6 +22,14 @@ def run():
         if run_test(script_file, test):
             passed += 1
 
+    # L10_T1 check
+    expected_content = "apple\nbanana\ncherry"
+
+    if task_code == TaskCode.from_string("L10_T1"):
+        with open("tests/assets/sorted_output.txt") as f:
+            actual = f.read().strip()
+        return actual == expected_content
+
     test_summary(total, passed)
 
 if __name__ == "__main__":
