@@ -1,5 +1,6 @@
 import subprocess
 import sys
+from data.homework_test_case import HomeworkTestCase
 
 def run_solution_file(script_file, *args):
     """
@@ -31,40 +32,31 @@ def run_solution_file(script_file, *args):
     )
     return result.stdout.strip()
 
-def run_test(script_file, description, args, expected_output):
+def run_test(script_file: str, test_case: HomeworkTestCase) -> bool:
     """
-    Runs a single test case against a given student solution script and prints the result.
+    Runs a single test case against the specified solution script and prints the result.
 
     This function:
-        - Executes the target Python script with the provided arguments
-        - Compares the actual output to the expected output
-        - Prints a formatted message indicating success or failure
-        - Returns True if the output matches, otherwise False
+        - Executes the student's Python script with arguments from the HomeworkTestCase
+        - Prints a description, input arguments, and actual output
+        - Compares the output to the expected result
+        - Returns True if the output matches, False otherwise
 
     Parameters:
-        script_file (str): Path to the student's solution file to be executed.
-        description (str): Human-readable description of the test case.
-        args (list of str): Command-line arguments to pass to the script.
-        expected_output (str): The output that the script is expected to produce.
+        script_file (str): Path to the student solution file.
+        test_case (HomeworkTestCase): The test case to run.
 
     Returns:
-        bool: True if the output matches the expected output, False otherwise.
-
-    Example:
-        >>> run_test("F12345_L2_T3.py", "Duplicate input", ["1", "2", "2"], "True")
-        🧪 Duplicate input
-        ➡️ Running with arguments: 1 2 2
-        ⬅️ Output received: True
-        ✅ Test passed
-        True
+        bool: True if the script's output matches the expected output; False otherwise.
     """
-    print(f"🧪 {description}")
-    print(f"➡️ Running with arguments: {' '.join(args)}")
-    output = run_solution_file(script_file, *args)
+    print(test_case)  # uses __str__ for description, arguments, and expected output
+
+    output = run_solution_file(script_file, *test_case.get_args())
     print(f"⬅️ Output received: {output}")
-    if output == expected_output:
+
+    if output == test_case.get_expected_output():
         print("✅ Test passed\n")
         return True
     else:
-        print(f"❌ Test failed – expected: {expected_output}\n")
+        print(f"❌ Test failed – expected: {test_case.get_expected_output()}\n")
         return False

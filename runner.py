@@ -2,6 +2,7 @@ import sys
 from utils import run_test
 from services.test_loader import TestLoader
 from data.task_code import TaskCode
+from data.homework_test_case import HomeworkTestCase
 
 def run():
     if len(sys.argv) != 2:
@@ -18,8 +19,8 @@ def run():
     passed = 0
     total = len(test_cases)
 
-    for description, args, expected in test_cases:
-        if run_test(script_file, description, args, expected):
+    for test in test_cases:
+        if run_test(script_file, test):
             passed += 1
 
     print("📊 Test Summary:")
