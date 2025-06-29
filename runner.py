@@ -1,5 +1,7 @@
 import sys
-from utils import run_test, test_summary
+from data.test_case_summary import TestCaseSummary
+from data.test_suite_summary import TestSuiteSummary
+from utils import run_test
 from services.test_loader import TestLoader
 from data.task_code import TaskCode
 
@@ -15,22 +17,23 @@ def run():
     
     test_suite = TestLoader.load(task_code)
 
-    passed = 0
-    total = len(test_suite)
+    results: list[TestCaseSummary] = []
 
     for test in test_suite:
-        if run_test(script_file, test):
-            passed += 1
+        summary = run_test(script_file, test)
+        results.append(summary)
 
-    # L10_T1 check
-    expected_content = "apple\nbanana\ncherry"
+    # # TODO Refactor!
+    # # L10_T1 check
+    # expected_content = "apple\nbanana\ncherry"
 
-    if task_code == TaskCode.from_string("_L10_T1"):
-        with open("tests/assets/sorted_output.txt") as f:
-            actual = f.read().strip()
-        return actual == expected_content
+    # if task_code == TaskCode.from_string("_L10_T1"):
+    #     with open("tests/assets/sorted_output.txt") as f:
+    #         actual = f.read().strip()
+    #     return actual == expected_content
 
-    test_summary(total, passed)
+    test_suite_summary = TestSuiteSummary(results)
+    print(test_suite_summary)
 
 if __name__ == "__main__":
     run()

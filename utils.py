@@ -1,6 +1,7 @@
 import subprocess
 import sys
 from data.homework_test_case import HomeworkTestCase
+from data.test_case_summary import TestCaseSummary
 
 def run_solution_file(script_file, *args):
     """
@@ -32,7 +33,7 @@ def run_solution_file(script_file, *args):
     )
     return result.stdout.strip()
 
-def run_test(script_file: str, test_case: HomeworkTestCase) -> bool:
+def run_test(script_file: str, test_case: HomeworkTestCase) -> TestCaseSummary:
     """
     Runs a single test case against the specified solution script and prints the result.
 
@@ -52,21 +53,5 @@ def run_test(script_file: str, test_case: HomeworkTestCase) -> bool:
     print(test_case)
 
     output = run_solution_file(script_file, *test_case.get_args())
-    print(f"⬅️ Output received: {output}")
 
-    if output == test_case.get_expected_output():
-        print("✅ Test passed\n")
-        return True
-    else:
-        print(f"❌ Test failed – expected: {test_case.get_expected_output()}\n")
-        return False
-
-
-def test_summary(total: int, passed: int):
-    print("📊 Test Summary:")
-    print(f"✅ Passed:   {passed}/{total}")
-    print(f"❌ Failed:   {total - passed}/{total}")
-    if passed == total:
-        print("🎉 All tests passed successfully!")
-    else:
-        print("⚠️ Some tests failed. Please review your solution.")
+    return TestCaseSummary(test_case, output)
