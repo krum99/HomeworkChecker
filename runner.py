@@ -25,7 +25,7 @@ def run():
     # L10_T1 check
     expected_content = "apple\nbanana\ncherry"
 
-    if task_code == TaskCode.from_string("L10_T1"):
+    if task_code == TaskCode.from_string("_L10_T1"):
         with open("tests/assets/sorted_output.txt") as f:
             actual = f.read().strip()
         return actual == expected_content
