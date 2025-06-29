@@ -6,29 +6,32 @@ from constants import Path
 from data.task_code import TaskCode
 from data.homework_test_suite import HomeworkTestSuite
 
+
+# TODO Refactor, some of these functions should go to utils or build other services.
 class TestLoader:
     """
-    A utility class for loading test cases for a specific task based on its task code.
+    A utility class for loading test cases for a specific task based on its TaskCode.
 
-    The class provides static methods to:
-    - Parse a task code (e.g., 'L2_T3') into its components
+    This class provides static methods to:
+    - Parse a TaskCode into its lecture and task components
     - Build the expected path to the corresponding test file
-    - Dynamically import the test module and extract the 'test_cases' variable
+    - Dynamically import the test module and extract the 'test_suite' variable,
+      which must be an instance of HomeworkTestSuite
     """
 
     @staticmethod
     def load(task_code: TaskCode) -> HomeworkTestSuite:
         """
-        Loads the list of test cases for the given task code.
+        Loads the test suite for the given TaskCode.
 
         Parameters:
-            task_code (str): A string in the format 'L<number>_T<number>', e.g. 'L2_T3'.
+            task_code (TaskCode): Parsed task code object (e.g., representing 'L2_T3').
 
         Returns:
-            list: A list of test cases defined in the corresponding test module.
+            HomeworkTestSuite: The test suite defined in the corresponding test module.
 
         Raises:
-            SystemExit: If the test file is not found or does not define 'test_cases'.
+            SystemExit: If the test file is not found or does not define 'test_suite'.
         """
         test_path = TestLoader._build_test_path(task_code.get_lecture(), task_code.get_task())
         module = TestLoader._import_test_module(test_path)
