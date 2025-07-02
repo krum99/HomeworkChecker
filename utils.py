@@ -50,7 +50,6 @@ def run_test(script_file: str, test_case: HomeworkTestCase) -> TestCaseSummary:
     Returns:
         bool: True if the script's output matches the expected output; False otherwise.
     """
-    print(test_case)
 
     output = run_solution_file(script_file, *test_case.get_args())
 
