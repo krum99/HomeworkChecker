@@ -5,6 +5,11 @@ from utils import run_test
 from services.test_loader import TestLoader
 from data.task_code import TaskCode
 
+
+#TODO
+# Introduce Runner interface and provide impementation to support
+# args pass by the keyboard as well during the tests execution.
+
 def run():
     if len(sys.argv) != 2:
         print("Usage: python runner.py <solution_file.py>")
