@@ -8,6 +8,8 @@ from data.homework_test_suite import HomeworkTestSuite
 
 
 # TODO Refactor, some of these functions should go to utils or build other services.
+# TODO Either this should be a specific loader that depends on the TaskCode, either
+# it should not depend on it.
 class TestLoader:
     """
     A utility class for loading test cases for a specific task based on its TaskCode.
