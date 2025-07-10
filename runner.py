@@ -1,9 +1,17 @@
 import sys
 from data.test_case_summary import TestCaseSummary
 from data.test_suite_summary import TestSuiteSummary
+from services.homework_test_path_builder import HomeworkTestPathBuilder
+from services.variable_importer import VariableImporter
 from utils import run_test
 from services.test_loader import TestLoader
 from data.task_code import TaskCode
+
+
+def configure_test_loader(task_code: TaskCode):
+    path_builder = HomeworkTestPathBuilder()
+    importer = VariableImporter()
+    return TestLoader(path_builder, importer)
 
 
 #TODO
@@ -19,8 +27,10 @@ def run():
     script_file = sys.argv[1]
 
     task_code = TaskCode.from_string(script_file)
+
+    test_loader = configure_test_loader(task_code)
     
-    test_suite = TestLoader.load(task_code)
+    test_suite = test_loader.load(task_code)
 
     results: list[TestCaseSummary] = []
 
